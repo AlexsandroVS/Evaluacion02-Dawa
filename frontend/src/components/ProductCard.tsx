@@ -19,7 +19,8 @@ export default function ProductCard({ id, name, price, provider_name, image_path
     >
       <div className="overflow-hidden rounded-lg">
         <motion.img 
-          src={`http://localhost:3000/${image_path}`} 
+          src={`https://evaluacion02-dawa.onrender.com/${image_path}`} 
+
           alt={name} 
           className="w-full h-40 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
           whileHover={{ scale: 1.05 }}
