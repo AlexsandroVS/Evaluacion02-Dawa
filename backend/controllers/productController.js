@@ -19,18 +19,19 @@ import {
   export const createProductController = async (req, res) => {
     try {
       const { name, price, provider_id } = req.body;
-      const image_path = req.file?.path || null;
+      const image_path = req.file ? req.file.path : null;
   
-      if (!name || !price || !provider_id) {
-        return res.status(400).json({ error: 'Faltan campos obligatorios' });
-      }
-  
-      const nuevo = await createProduct({ name, price, provider_id, image_path });
-      res.status(201).json(nuevo);
-    } catch {
-      res.status(500).json({ error: 'Error al crear producto' });
+      const result = await pool.query(
+        'INSERT INTO products (name, price, provider_id, image_path) VALUES ($1, $2, $3, $4) RETURNING *',
+        [name, price, provider_id, image_path]
+      );
+      res.status(201).json(result.rows[0]);
+    } catch (error) {
+      console.error('❌ Error al crear producto:', error);
+      res.status(500).json({ error: 'Error al crear el producto' });
     }
   };
+  
   
   export const updateProductController = async (req, res) => {
     try {
