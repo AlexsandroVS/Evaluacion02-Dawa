@@ -12,7 +12,7 @@ pool.connect()
   .then(() => console.log('✅ Conectado a PostgreSQL (Docker)'))
   .catch(err => console.error('❌ Error al conectar a PostgreSQL:', err));
 
-  
+
 async function connectWithRetry(retries = 5, delay = 2000) {
   for (let i = 0; i < retries; i++) {
     try {
@@ -38,3 +38,5 @@ app.use('/api/providers', providerRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Servidor en http://localhost:${PORT}`));
+
+
