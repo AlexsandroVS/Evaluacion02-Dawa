@@ -5,7 +5,9 @@ import {
     updateProduct,
     deleteProduct
   } from '../models/productModel.js';
-  import db from '../config/db.js';
+
+  import pool from '../config/db.js';
+
   
   export const listProducts = async (req, res) => {
     try {
@@ -86,7 +88,7 @@ import {
   
       values.push(id);
       const query = `UPDATE products SET ${columns.join(', ')} WHERE id = $${i} RETURNING *`;
-      const result = await db.query(query, values);
+      const result = await pool.query(query, values);
   
       res.json(result.rows[0]);
     } catch (error) {
