@@ -1,27 +1,12 @@
 FROM node:23-slim
 
-# Etapa 1: construir frontend
-WORKDIR /app
-COPY frontend/package*.json ./frontend/
-RUN cd frontend && npm install
-COPY frontend ./frontend
-RUN cd frontend && npm run build
-
-# Etapa 2: backend + copiar frontend
-FROM node:23-slim
 WORKDIR /app
 
-# Copiar backend
-COPY backend/package*.json ./
+COPY package*.json ./
 RUN npm install
-COPY backend .
 
-# Copiar el frontend compilado al directorio público
-COPY --from=frontend /app/frontend/dist ./public
-
-# Crear carpeta para imágenes si no existe
-RUN mkdir -p uploads
+COPY . .
 
 EXPOSE 3000
-CMD ["node", "server.js"]
 
+CMD ["npm", "start"]
